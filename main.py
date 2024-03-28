@@ -14,8 +14,36 @@ from PIL import Image
 import pickle
 from pathlib import Path
 
+# ---user authentication ---
+names = ["Shawn Santosh", "Joshua Santosh"]
+usernames = ["ShawnS", "JoshuaS"] 
+# Load hashed passwords 
+file_path = Path(__file__).parent / "hashed_pw.pkl"
 
-def get_pdf_text(pdf_docs):
+try:
+    with open(file_path, "rb") as file:
+        data = pickle.load(file)
+except FileNotFoundError:
+      print("file not found")
+except PermissionError:
+    print("Permission Denied to open the file")
+except Exception as e:
+    print("an error occured:",e)    
+
+authenticator = stauth.Authenticate(names, usernames, file_path, "chatPDF", "abcdef", cookie_expiry_days=30)
+
+name, authentication_status, username = authenticator.login("Login", "main")
+
+if authentication_status == False:
+    st.error("Username/password is incorrect")
+
+if authentication_status == None:
+    st.warning("Please enter your username and password")
+
+if authentication_status:
+
+
+ def get_pdf_text(pdf_docs):
      text = ""
      for pdf in pdf_docs:
         pdf_reader = PdfReader(pdf)
@@ -24,7 +52,7 @@ def get_pdf_text(pdf_docs):
      return text
 
 
-def get_text_chunks(text):
+ def get_text_chunks(text):
      text_splitter = CharacterTextSplitter(
         separator="\n",
         chunk_size=1000,
@@ -35,14 +63,14 @@ def get_text_chunks(text):
      return chunks
 
 
-def get_vectorstore(text_chunks):
+ def get_vectorstore(text_chunks):
       embeddings = OpenAIEmbeddings()
     # embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-xl")
       vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
       return vectorstore
 
 
-def get_conversation_chain(vectorstore):
+ def get_conversation_chain(vectorstore):
      llm = ChatOpenAI()
     # llm = HuggingFaceHub(repo_id="google/flan-t5-xxl", model_kwargs={"temperature":0.5, "max_length":512})
 
@@ -56,7 +84,7 @@ def get_conversation_chain(vectorstore):
      return conversation_chain
 
 
-def handle_userinput(user_question):
+ def handle_userinput(user_question):
      response = st.session_state.conversation({'question': user_question})
      st.session_state.chat_history = response['chat_history']
 
@@ -69,7 +97,7 @@ def handle_userinput(user_question):
                 "{{MSG}}", message.content), unsafe_allow_html=True)
 
 
-def main():
+ def main():
      load_dotenv()
      st.set_page_config(page_title="Chat with multiple PDFs",
                        page_icon=":books:")
@@ -105,7 +133,7 @@ def main():
                     vectorstore)
                 
 
-if __name__ == '__main__':
+ if __name__ == '__main__':
      main()
 
  
