@@ -14,34 +14,6 @@ import pickle
 from pathlib import Path
 import streamlit_authenticator as stauth 
 
-# ---user authentication ---
-names = ["Shawn Santosh", "Joshua Santosh"]
-usernames = ["ShawnS", "JoshuaS"] 
-# Load hashed passwords 
-file_path = Path(__file__).parent / "hashed_pw.pkl"
-
-try:
-    with open(file_path, "rb") as file:
-        data = pickle.load(file)
-except FileNotFoundError:
-      print("file not found")
-except PermissionError:
-    print("Permission Denied to open the file")
-except Exception as e:
-    print("an error occured:",e)    
-
-authenticator = stauth.Authenticate(names, usernames, file_path, "chatPDF", "abcdef", cookie_expiry_days=30)
-
-name, authentication_status, username = authenticator.login("Login", "main")
-
-if authentication_status == False:
-    st.error("Username/password is incorrect")
-
-if authentication_status == None:
-    st.warning("Please enter your username and password")
-
-if authentication_status:
-
  def get_pdf_text(pdf_docs):
     text = ""
     for pdf in pdf_docs:
