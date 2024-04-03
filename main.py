@@ -88,7 +88,7 @@ def main():
         handle_userinput(user_question)
 
      with st.sidebar:
-        url = "https://quizebot-wio7kacellyzrbue2kh3et.streamlit.app/"
+        url = "https://quizebot-wio7kacellyzrbue2kh3et.streamlit.app"
         if st.button('QUIZBOT'):
          webbrowser.open_new_tab(url)
         st.subheader("Your documents")
