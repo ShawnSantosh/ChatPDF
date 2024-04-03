@@ -11,8 +11,8 @@ from langchain.chains import ConversationalRetrievalChain
 from htmlTemplates import css, bot_template, user_template
 from langchain.llms import HuggingFaceHub
 from PIL import Image
-import pickle
 from pathlib import Path
+import webbrowser
 
 
 
@@ -48,7 +48,7 @@ def get_vectorstore(text_chunks):
 
 def get_conversation_chain(vectorstore):
      llm = ChatOpenAI()
-    # llm = HuggingFaceHub(repo_id="google/flan-t5-xxl", model_kwargs={"temperature":0.5, "max_length":512})
+     llm = HuggingFaceHub(repo_id="google/flan-t5-xxl", model_kwargs={"temperature":0.5, "max_length":512})
 
      memory = ConversationBufferMemory(
         memory_key='chat_history', return_messages=True)
@@ -88,6 +88,9 @@ def main():
         handle_userinput(user_question)
 
      with st.sidebar:
+        url = "https://quizebot-wio7kacellyzrbue2kh3et.streamlit.app/"
+        if st.button('QUIZBOT'):
+         webbrowser.open_new_tab(url)
         st.subheader("Your documents")
         pdf_docs = st.file_uploader(
             "Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
@@ -108,4 +111,6 @@ def main():
                 
 
 if __name__ == '__main__':
-   main()
+    main()
+                
+
