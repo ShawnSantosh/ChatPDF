@@ -88,9 +88,9 @@ def main():
         handle_userinput(user_question)
 
      with st.sidebar:
-        url = "https://quizebot-wio7kacellyzrbue2kh3et.streamlit.app"
+        url = "https://quizebot-wio7kacellyzrbue2kh3et.streamlit.app/"
         if st.button('QUIZBOT'):
-         webbrowser.open_new_tab(url)
+            webbrowser.open_new_tab(url)
         st.subheader("Your documents")
         pdf_docs = st.file_uploader(
             "Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
