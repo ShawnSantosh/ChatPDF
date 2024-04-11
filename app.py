@@ -6,8 +6,6 @@ from helpers.quiz_utils import string_to_list, get_randomized_options
 from helpers.toast_messages import get_random_toast
 import os 
 from langchain.chat_models import ChatOpenAI
-import pickle 
-from streamlit_option_menu import option_menu 
 
 
 
