@@ -90,6 +90,7 @@ def main():
      with st.sidebar:
         url = "https://quizebot-wio7kacellyzrbue2kh3et.streamlit.app/"  
         st.link_button("QuizBot", url)
+          st.markdown(f'<a href="{url}" onclick="window.location.href=\'{url}\'; return false;">QuizBot</a>', unsafe_allow_html=True)
         st.subheader("Your documents")
         pdf_docs = st.file_uploader(
             "Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
