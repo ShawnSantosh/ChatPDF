@@ -79,3 +79,4 @@ urllib3==2.2.1
 watchdog==4.0.0
 yarl==1.9.4
 youtube-transcript-api==0.6.2
+faiss-cpu==1.8.0
